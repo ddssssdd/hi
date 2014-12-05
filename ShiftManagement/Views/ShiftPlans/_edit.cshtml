@@ -1,0 +1,226 @@
+﻿@model ShiftBusiness.Hospital.ShiftPlan
+@{
+    List<ShiftBusiness.Hospital.Department> departs = new ShiftBusiness.Service.DepartmentService().List();
+    var list = new List<SelectListItem>();
+   
+
+    foreach (var d in departs)
+    {
+        var item = new SelectListItem();
+        item.Value = d.Id.ToString();
+        item.Text = d.Name;
+        list.Add(item);
+    }
+    list.Insert(0, new SelectListItem { Value = "0", Text = "" });
+    
+    
+}
+<div class="form-group">
+    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BeginTime, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BeginTime, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BeginTime, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.DepartmentId, list, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+            <button type="button" class="btn-primary btn-xs" data-toggle="modal" data-target="#edit_exception">Add Exception</button>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <tr>
+
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Begin Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Used to weekend
+            </th>
+            <th>
+                Used to holiday
+            </th>
+            <th>
+                Begin time
+            </th>
+            <th>
+                End time
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.Exceptions)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsedToWeekend)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsedToHoliday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="modal fade" id="edit_exception" role="dialog" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/ShiftPlanExceptions/Create" method="post">
+                    
+                    <div class="form-horizontal">
+                    
+                        
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Name">Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="Name" name="Name" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Description">Description</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="Description" name="Description" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="StartDate">StartDate</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field StartDate must be a date." id="StartDate" name="StartDate" type="datetime" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="StartDate" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="EndDate">EndDate</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field EndDate must be a date." id="EndDate" name="EndDate" type="datetime" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="EndDate" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="UsedToWeekend">UsedToWeekend</label>
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    <input class="check-box" data-val="true" data-val-required="UsedToWeekend 字段是必需的。" id="UsedToWeekend" name="UsedToWeekend" type="checkbox" value="true" /><input name="UsedToWeekend" type="hidden" value="false" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="UsedToWeekend" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="UsedToHoliday">UsedToHoliday</label>
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    <input class="check-box" data-val="true" data-val-required="UsedToHoliday 字段是必需的。" id="UsedToHoliday" name="UsedToHoliday" type="checkbox" value="true" /><input name="UsedToHoliday" type="hidden" value="false" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="UsedToHoliday" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="BeginTime">BeginTime</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="BeginTime" name="BeginTime" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="BeginTime" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="EndTime">EndTime</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="EndTime" name="EndTime" type="text" value="" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="EndTime" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

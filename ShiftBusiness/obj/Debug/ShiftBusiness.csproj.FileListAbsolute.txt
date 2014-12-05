@@ -1,0 +1,9 @@
+F:\programs\HospitalInformation\ShiftBusiness\bin\Debug\ShiftBusiness.dll.config
+F:\programs\HospitalInformation\ShiftBusiness\bin\Debug\ShiftBusiness.dll
+F:\programs\HospitalInformation\ShiftBusiness\bin\Debug\ShiftBusiness.pdb
+F:\programs\HospitalInformation\ShiftBusiness\bin\Debug\EntityFramework.dll
+F:\programs\HospitalInformation\ShiftBusiness\bin\Debug\EntityFramework.SqlServer.dll
+F:\programs\HospitalInformation\ShiftBusiness\bin\Debug\EntityFramework.xml
+F:\programs\HospitalInformation\ShiftBusiness\bin\Debug\EntityFramework.SqlServer.xml
+F:\programs\HospitalInformation\ShiftBusiness\obj\Debug\ShiftBusiness.dll
+F:\programs\HospitalInformation\ShiftBusiness\obj\Debug\ShiftBusiness.pdb

@@ -1,0 +1,67 @@
+﻿@model ShiftBusiness.Hospital.EmployeeGroup
+@{
+    
+    List<ShiftBusiness.Hospital.Department> departs = new ShiftBusiness.Service.DepartmentService().List();
+    var items = new SelectList(departs, "Id", "Name");
+    var egId = 0;
+    if (Model != null)
+    {
+        egId = Model.Id;
+    }
+}
+
+<div class="form-group">
+    @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2"  })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.DepartmentId, items, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class = "control-label col-md-2">Employees</label>
+    <div class="col-md-10">
+        <div class="checkbox" id="employees">
+            
+        </div>
+
+    </div>
+</div>
+<script>
+    $("document").ready(function () {
+        getEmployees($("#DepartmentId").val());
+        $("#DepartmentId").change(function () {
+            getEmployees($(this).val());
+        });
+    });
+    function getEmployees(departId) {
+        var url = "@Url.Action("Employees", "EmployeeGroups")";
+        $.getJSON(url, { departId: departId,egId : @egId }, function (json) {
+            if (json != null) {
+                fillEmployees(json);
+            }
+        })
+    }
+    function fillEmployees(items) {
+        var div = $("#employees");
+        div.empty();
+        for (var i = 0; i < items.length; i++) {
+            var emp = items[i];
+            var ischecked = "";
+            if (emp.isInGroup) {
+                ischecked = "checked";
+            }
+            var item = "<div class='checkbox'><label> \
+                    <input type='checkbox' "+ischecked+" name='FormDetails'  value="+emp.Id+" />"+emp.Name+" \
+                </label></div>";
+            $(item).appendTo(div);
+        }
+    }
+</script>
